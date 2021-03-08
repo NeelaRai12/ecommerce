@@ -105,7 +105,7 @@ def signin(request):
             return redirect('/')
         else:
             messages.error(request,'Username and password do not match.')
-            return redirect('home:login')
+            return redirect('home:signin')
 
     return render(request,'signin.html')
 
@@ -119,13 +119,27 @@ def cart(request,slug):
     if Cart.objects.filter(slug = slug, user = request.user.username).exists():
         quantity = Cart.objects.get(slug = slug, user = request.user.username).quantity
         quantity = quantity + 1
-        Cart.objects.filter(slug=slug, user=request.user.username).update(quantity = quantity)
+        price = Item.objects.get(slug=slug).price
+        discounted_price = Item.objects.get(slug=slug).discounted_price
+        if discounted_price > 0:
+            total = discounted_price * quantity
+        else:
+            total = price * quantity
+
+        Cart.objects.filter(slug=slug, user=request.user.username).update(quantity = quantity, total = total)
 
     else:
+        price = Item.objects.get(slug=slug).price
+        discounted_price = Item.objects.get(slug=slug).discounted_price
+        if discounted_price >0:
+            total = discounted_price
+        else:
+            total = price
         data = Cart.objects.create(
             user = request.user.username,
             slug = slug,
-            item = Item.objects.filter(slug = slug)[0]
+            item = Item.objects.filter(slug = slug)[0],
+            total = total
         )
         data.save()
 
@@ -138,3 +152,19 @@ def deletecart(request,slug):
         messages.success(request,'The item is deleted.')
 
         return redirect("home:mycart")
+
+def delete_single_cart(request,slug):
+    if Cart.objects.filter(slug = slug, user = request.user.username).exists():
+        quantity = Cart.objects.get(slug = slug, user = request.user.username).quantity
+        quantity = quantity - 1
+        price = Item.objects.get(slug=slug).price
+        discounted_price = Item.objects.get(slug=slug).discounted_price
+        if discounted_price > 0:
+            total = discounted_price * quantity
+        else:
+            total = price * quantity
+
+        Cart.objects.filter(slug=slug, user=request.user.username).update(quantity = quantity, total = total)
+
+        return redirect("home:mycart")
+    

@@ -78,6 +78,9 @@ class Cart(models.Model):
     def delete_get_cart_url(self):
         return reverse("home:delete-cart", kwargs = {'slug':self.slug})
 
+    def delete_single_cart_url(self):
+        return reverse("home:delete-single-cart", kwargs = {'slug':self.slug})
+
 
 
 
