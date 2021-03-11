@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'csvexport',
 ]
 
 MIDDLEWARE = [
@@ -119,8 +120,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 import os
 STATIC_URL = '/static/'
+MEDIA_URL = 'media/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL ='/'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# host: 'smtp.gmail.com'
+# port: 587
+# username: 'neelarai941@gmail.com'
+# password: 'Chelseafcfc01'
+# use_tls: True
+# use_ssl: False
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'neelarai941@gmail.com'
+EMAIL_HOST_PASSWORD = 'Chelseafcfc01'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+CSV_EXPORT_REFERENCE_DEPTH = 3
+CSV_EXPORT_EMPTY_VALUE = ''
+
+# IMPORT_EXPORT_USE_TRANSACTIONS =True
+
