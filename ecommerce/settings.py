@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'csvexport',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -146,4 +147,3 @@ CSV_EXPORT_REFERENCE_DEPTH = 3
 CSV_EXPORT_EMPTY_VALUE = ''
 
 # IMPORT_EXPORT_USE_TRANSACTIONS =True
-

@@ -195,3 +195,17 @@ def contact(request):
 
     return render(request,'contact.html')
 
+
+# -----------------------------------------------API-------------------------------------------------------------------
+
+from rest_framework import viewsets
+from .serializers import *
+
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
